@@ -1,0 +1,27 @@
+Package: richness
+Type: Package
+Title: Species Richness Estimation Tools
+Version: 2.1
+Date: 2024-03-10
+Author: John Alroy
+Maintainer: John Alroy <john.alroy@mq.edu.au>
+Description: The richness package implements a series of species abundance
+    distribution, species richness, and diversity estimators. Distributions
+    include the broken stick, discrete Weibull, exponential-to-e, geometric
+    series, log series, Poisson log normal, scaled odds, zero-sum multinomial,
+    and Zipf. Richness and diversity estimation methods include Chao 1, Chao 2,
+    the corrected first-order jackknife, Fisher's alpha, inverted sampling curve
+    extrapolation, rarefaction, Shannon's H, shareholder quorum subsampling
+    (= coverage-based rarefaction), and Simpson's D. There are also stand-alone
+    interpolators of singleton and doubleton counts.
+License: GPL-2 | GPL-3
+RoxygenNote: 7.1.0
+Imports:
+    bbmle,
+    poilog,
+    sads,
+    stats4
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

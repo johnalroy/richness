@@ -1,0 +1,32 @@
+exp2e<-function(n)	{
+	if (length(n) < 3 || max(n) < 3)
+		return(list('richness' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
+	library(stats4)
+	S <- length(n)
+	n2 <- n[n <= 2^14]
+	S2 <- length(n2)
+	s <- array(dim=2^14,data=0)
+	t <- table(n2)
+	s[as.numeric(names(t))] <- t
+	u <- unique(n2)
+	e <- exp(-1)
+	x <- (1:(2^14 + 1))^e
+	like<-function(l)	{
+		if (l <= -1)
+			return(1e10)
+		p <- -diff(exp(-l * x)) / exp(-l)
+		if (is.nan(p[1]) || p[n2[S2]] < 1e-100 || min(p[u]) == 0 || sum(p[u]) > 1 - 1e-120)
+			return(1e10)
+		ll <- -S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T))
+		if (is.infinite(ll) || is.nan(ll))
+			return(1e10)
+		ll
+	}
+	l <- coef(stats4::mle(like,lower=list(l=-1),upper=list(l=100),start=list(l=1)))
+	if (l == -1 || l == 100)
+		return(list('richness' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
+	aicc <- 2 * like(l) + 2 + 4 / (S2 - 2)
+	x <- (1:(2^20 + 1))^e
+	p <- -diff(exp(-l * x)) / exp(-l)
+	return(list('richness' = as.numeric(S / e^l), 'lambda' = as.numeric(l), 'AICc' = aicc, 'fitted.RAD' = sadrad(length(n),p), 'fitted.SAD' = p[1:2^12]))
+}
