@@ -14,7 +14,7 @@ This utility function returns a large 2^14 by 2^14 matrix in which each row is a
 The parameters correspond to expected integer counts based on the standard geometric series probability mass function. The expectations assume that zero counts will not be observed.
 For example, row 3 in the matrix corresponds to an expected value of 3.
 This translates into a parameter \emph{p} = 1/(3 + 1), with the density multiplied by 4/3 to make sure the row probabilities sum to 1.
-The function is designed to be used in conjunction with \link{satgeom}.
+The function is designed to be used in conjunction with \link{saturate}.
 There are no arguments because the size of the matrix is fixed.
 \emph{Warning:} this function is very slow, so be patient and be sure to save the output.
 }
@@ -23,5 +23,5 @@ John Alroy
 }
 \examples{
 dg <- dgeoms()
-satgeom(1:9,100,dg)
+saturate(1:9,100,dg)
 }

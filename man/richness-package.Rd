@@ -15,7 +15,7 @@ This package implements various species abundance distribution, richness, and di
 The package fits count vectors to the broken stick (\link{bsd}), discrete Weibull (\link{weibull}), exponential-to-\emph{e} (\link{exp2e}), geometric series (\link{gsd}), log series (\link{logd}), negative binomial (\link{nbin}), Poisson log normal (\link{pln}), scaled odds (\link{sodds}), zero-sum multinomial (\link{zsm}), and Zipf (\link{zipf}) distributions.
 The exponential-to-\emph{e} and scaled odds distributions have been overlooked previously.
 There are random number generators respectively based on these two distributions (\link{rexp2e} and \link{rodds}).
-The function \link{satgeom} fits a saturated model that assumes a geometric sampling process.
+The function \link{saturate} fits a saturated model that assumes a geometric sampling process.
 
 The functions \emph{bsd}, \emph{exp2e}, \emph{gsd}, \emph{nbin}, \emph{sodds}, and \emph{weibull} depend only on the utility function \link{sadrad}.
 \link{sadrad} finds a series of counts that are evenly spaced across a species abundance distribution.
@@ -32,19 +32,18 @@ The utility functions \link{doubletons} and \link{singletons} can be used to rec
 
 Distributions are fit by optimising the corrected Akaike information criterion (AICc: Hurvich and Tsai 1993).
 The AICc is based on the negative log likelihood of the data.
-Here, the likelihood is the product of (1) the binomial probabilities of obtaining all of the non-zero species tallies across the count classes of the species abundance distribution (SAD); and (2) the probability that all species have fallen only in these occupied count classes.
+Here, the likelihood is just the product of the probabilities of obtaining the indivual species tallies given the hypothesised species abundance distribution.
+Because combinatoric terms are constant across all potential model parameters, this simple calculation yields the same solution as computing multinomial probabilities of the observed count distribution given different parameters.
 
-For example, if the counts are 1, 1, 2, and 9, then the computation only considers the count classes 1, 2, 9. The likelihood is the product of the binomial probabilities of finding two species in class 1 and one each in classes 1 and 2, then multiplied by the chance that all four species have fallen only in these three classes.
-
-The expression used in the relevant functions is therefore:
+The expression used in the relevant functions is:
 
 \code{
--S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T)
+-sum(s[u] * log(p[u]))
 }
 
-where s = the SAD (with counts of species in each cell), S2 = the number of species with counts not above 2^14, p = the probability mass function of a given theoretical distribution, and u = a list of unique counts, i.e., SAD cells that have non-zero counts.
+where s = the observed SAD (meaning counts of species in each class); p = the hypothesised probabilities of the model; and u = a list of unique counts, i.e., SAD cells that have non-zero counts.
 
-Note that S2 is the number of species with no more than 2^14 = 16384 individuals because these have to be discounted in each function to make computations tractable.
+Note that only species with 2^14 = 16384 or fewer individuals are considered in each function to make computations tractable.
 
 Unlike fitting a function directly to the rank-abundance distribution (RAD), this calculation requires specifying nothing other than the count class probabilities.
 So its advantage is being informed strongly by the counts but not beholden to their rank ordering.
