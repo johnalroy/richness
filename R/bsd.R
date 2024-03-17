@@ -19,7 +19,7 @@ bsd<-function(n)	{
 			p <- p[1:2^14]
 		if (min(p[u]) == 0 || sum(p[u]) > 1 - 1e-120)
 			return(1e10)
-		ll <- -R2 * log(sum(p[u])) - sum(dbinom(s[u],R2,p[u],log=T))
+		ll <- -sum(s[u] * log(p[u]))
 		if (is.infinite(ll))
 			return(1e10)
 		ll

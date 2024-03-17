@@ -13,7 +13,7 @@ logd<-function(n)	{
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
 	u <- unique(n2)
-	ll <- -S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T))
+	ll <- -sum(s[u] * log(p[u]))
 	aicc <- 2 * ll + 2 + 4 / (S2 - 2)
 	return(list('alpha' = as.numeric(a), 'AICc'= aicc, 'fitted.RAD' = sadrad(S,p), 'fitted.SAD' = p[1:2^12]))
 }

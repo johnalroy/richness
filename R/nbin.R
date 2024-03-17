@@ -17,7 +17,7 @@ nbin<-function(n)	{
 		pr <- pr / (1 - p^r)
 		if (is.infinite(pr[1]) || sum(pr) == 0)
 			return(1e6)
-		ll <- -S2 * log(sum(pr[u])) - sum(dbinom(s[u],S2,pr[u],log=T))
+		ll <- -sum(s[u] * log(pr[u]))
 		if (is.infinite(ll) || is.nan(ll))
 			ll <- 1e6
 		ll

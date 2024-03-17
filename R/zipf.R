@@ -13,7 +13,7 @@ zipf<-function(n)	{
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
 	u <- unique(n2)
-	ll <- -S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T))
+	ll <- -sum(s[u] * log(p[u]))
 	aicc <- 2 * ll + 4 + 4 / (S2 - 2)
 	return(list('exponent' = as.numeric(z), 'AICc'= aicc, 'fitted.RAD' = sadrad(length(n),p), 'fitted.SAD' = p[1:2^12]))
 }

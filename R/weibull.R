@@ -17,7 +17,7 @@ weibull<-function(n)	{
 		p <- (exp(-(x / a)^b) - exp(-(x1 / a)^b)) / exp(-1 / a^b)
 		if (is.nan(p[1]) || sum(p) == 0 || min(p[u]) == 0 || sum(p[u]) > 1 - 1e-120)
 			return(1e10)
-		ll <- -S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T))
+		ll <- -sum(s[u] * log(p[u]))
 		if (is.infinite(ll) || is.nan(ll))
 			return(1e10)
 		ll

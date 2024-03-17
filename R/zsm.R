@@ -13,7 +13,7 @@ zsm<-function(n)	{
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
 	u <- unique(n2)
-	ll <- -S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T))
+	ll <- -sum(s[u] * log(p[u]))
 	aicc <- 2 * ll + 4 + 12 / (S2 - 3)
 	return(list('J' = as.numeric(z[1]), 'theta' = as.numeric(z[2]), 'AICc'= aicc, 'fitted.RAD' = sadrad(length(n),p), 'fitted.SAD' = p[1:2^12]))
 }

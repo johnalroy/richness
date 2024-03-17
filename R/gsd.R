@@ -19,7 +19,7 @@ gsd<-function(n)	{
 		p <- p / sum(p)
 		if (is.nan(p[1]) || p[n2[S2]] < 1e-100 || min(p[u]) == 0 || sum(p[u]) > 1 - 1e-120)
 			return(1e10)
-		ll <- -S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T))
+		ll <- -sum(s[u] * log(p[u]))
 		if (is.infinite(ll) || is.nan(ll))
 			return(1e10)
 		ll

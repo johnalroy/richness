@@ -22,7 +22,7 @@ pln<-function(n)	{
 	n2 <- n[n <= 2^14]
 	S2 <- length(n2)
 	u <- unique(n2)
-	ll <- -S2 * log(sum(p[u])) - sum(dbinom(s[u],S2,p[u],log=T))
+	ll <- -sum(s[u] * log(p[u]))
 	aicc <- 2 * ll + 4 + 12 / (S2 - 3)
 	return(list('richness' = S / pl$p, 'mu' = as.numeric(pl$par[1]), 'sigma' = as.numeric(pl$par[2]), 'AICc'= aicc, 'fitted.RAD' = sadrad(S,p), 'fitted.SAD' = p[1:2^12]))
 }
