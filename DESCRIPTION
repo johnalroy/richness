@@ -1,8 +1,8 @@
 Package: richness
 Type: Package
 Title: Species Richness Estimation Tools
-Version: 2.1
-Date: 2024-03-10
+Version: 2.2
+Date: 2024-03-17
 Author: John Alroy
 Maintainer: John Alroy <john.alroy@mq.edu.au>
 Description: The richness package implements a series of species abundance
