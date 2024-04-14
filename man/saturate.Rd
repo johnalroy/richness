@@ -56,7 +56,7 @@ lines(rev(s$fitted.RAD),col='red')
 
 # compare the log likelihoods to the observed values for fitted model
 s$mean.LL
-AICc2LL(sodds(n)$AICc)
-AICc2LL(exp2e(n)$AICc)
-AICc2LL(logd(n)$AICc)
+AICc2LL(n,sodds(n)$AICc)
+AICc2LL(n,halfpower(n)$AICc)
+AICc2LL(n,logd(n)$AICc)
 }

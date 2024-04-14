@@ -40,7 +40,7 @@ nbin(n[n > 0])$fitted.RAD
 n <- rodds(100,1)
 nbin(n[n > 0])$fitted.RAD
 
-# exponential-to-e distribution
-n <- rexp2e(100,1)
+# half-power exponential distribution
+n <- rhp(100,1)
 nbin(n[n > 0])$fitted.RAD
 }

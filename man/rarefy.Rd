@@ -37,7 +37,7 @@ rarefy(n[n > 0],50)
 n <- rodds(100,1)
 rarefy(n[n > 0],50)
 
-# exponential-to-e distribution
-n <- rexp2e(100,1)
+# half-power exponential distribution
+n <- rhp(100,1)
 rarefy(n[n > 0],50)
 }

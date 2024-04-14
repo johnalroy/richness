@@ -46,7 +46,7 @@ sqs(n[n > 0],0.5)
 n <- rodds(100,1)
 sqs(n[n > 0],0.5)
 
-# exponential-to-e distribution
-n <- rexp2e(100,1)
+# half-power exponential distribution
+n <- rhp(100,1)
 sqs(n[n > 0],0.5)
 }

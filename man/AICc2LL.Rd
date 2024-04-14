@@ -40,5 +40,4 @@ a <- sodds(n)$AICc
 # convert to a log likelihood
 AICc2LL(n,a,2)
 
-
 }

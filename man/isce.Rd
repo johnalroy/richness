@@ -29,7 +29,7 @@ The rarefied (= subsampled) richness values are found using the standard combina
 After computing the rarefaction curve, \emph{isce} uses the \emph{stats} function \emph{nls} to fit the power law (1 + \emph{a})/(\emph{p}^\emph{b} + \emph{a}) where \emph{a} = a scaling constant, \emph{p} = is the proportion of individuals drawn in a subsample, and \emph{b} is a power constant.
 The data are first log transformed. Asymptotic richness is S (1 + \emph{a})/\emph{a} when sampling is infinite.
 
-This function works well under a variety of circumstances, but can underestimate when the data follow the \link{exp2e} distribution. It is generally recommended as a means of illustrating trends in rarefaction curves.
+This function works well under a variety of circumstances, but can underestimate when the data follow something like the \link{halfpower} distribution. It is generally recommended as a means of illustrating trends in rarefaction curves.
 }
 \value{
   \item{asymptotic.richness}{The expected number of species based on extrapolating the end of the rarefaction curve.}
@@ -55,12 +55,12 @@ isce(n[n > 0])
 n <- rodds(100,1)
 isce(n[n > 0])
 
-# exponential-to-e distribution
-n <- rexp2e(100,1)
+# half-power exponential distribution
+n <- rhp(100,1)
 isce(n[n > 0])
 
 # graph the results
 i <- isce(n[n > 0],base=0.1)
 plot(i$proportions,i$fitted.curve,type='l',xlim=c(1 / 0.1,0),log='y')
-points(i$subsampled.proportions,i$subsampled.richness,cex=0.5)
+points(i$proportions,i$subsampled.richness,cex=0.5)
 }

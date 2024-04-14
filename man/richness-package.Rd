@@ -12,14 +12,16 @@
 
 This package implements various species abundance distribution, richness, and diversity estimators that work on arrays of species counts.
 
-The package fits count vectors to the broken stick (\link{bsd}), discrete Weibull (\link{weibull}), exponential-to-\emph{e} (\link{exp2e}), geometric series (\link{gsd}), log series (\link{logd}), negative binomial (\link{nbin}), Poisson log normal (\link{pln}), scaled odds (\link{sodds}), zero-sum multinomial (\link{zsm}), and Zipf (\link{zipf}) distributions.
-The exponential-to-\emph{e} and scaled odds distributions have been overlooked previously.
-There are random number generators respectively based on these two distributions (\link{rexp2e} and \link{rodds}).
+The package fits count vectors to the broken stick (\link{bsd}), discrete Weibull (\link{weibull}), exponential-to-\emph{e} (\link{exp2e}), geometric series (\link{gsd}), half-power exponential (\link{halfpower}), log series (\link{logd}), negative binomial (\link{nbin}), odds-2 (\link{odds2}), Poisson log normal (\link{pln}), scaled odds (\link{sodds}), zero-sum multinomial (\link{zsm}), and Zipf (\link{zipf}) distributions.
+The exponential-to-\emph{e}, half-power exponential, odds-2, and scaled odds distributions have been overlooked previously.
+There are random number generators respectively based on these four distributions (\link{rexp2e}, \link{rhp}, \link{rodds2}, and \link{rodds}).
 The function \link{saturate} fits a saturated model that assumes a geometric sampling process.
 
-The functions \emph{bsd}, \emph{exp2e}, \emph{gsd}, \emph{nbin}, \emph{sodds}, and \emph{weibull} depend only on the utility function \link{sadrad}.
-\link{sadrad} finds a series of counts that are evenly spaced across a species abundance distribution.
+The functions \emph{bsd}, \emph{exp2e}, \emph{gsd}, \emph{halfpower}, \emph{nbin}, \emph{odds2}, \emph{sodds}, and \emph{weibull} depend only on the utility function \link{sadrad}.
+\emph{sadrad} finds a series of counts that are evenly spaced across a species abundance distribution.
 The other distribution functions also depend on the packages \emph{poilog} and \emph{sads}.
+
+If a matrix of count data covering a spatial or temporal gradient is available, \link{bat} can be used to carry out before-and-after transect analysis. \emph{bat} can use any one of the many distribution-based richness estimators mentioned previously.
 
 The species richness extrapolation indices are Chao 1 (\link{chao1}), Chao 2 (\link{chao2}), the corrected first-order jackknife (\link{cJ1}: Alroy 2020), and the first- and second-order jackknifes (\link{jackknife1} and \link{jackknife2}).
 The blended diversity estimators are Fisher's alpha (\link{fisher}), Shannon's H (\link{shannon}), and the inverse of Simpson's D (\link{simpson}).
@@ -93,7 +95,7 @@ legend('topright',c('data','odds','LS','PLN'),col=c('black','blue','red','green4
 
 # calculate species richness estimates based on several methods
 
-exp2e(n)$richness
+halfpower(n)$richness
 sodds(n)$richness
 pln(n)$richness
 chao1(n)
@@ -111,7 +113,7 @@ R <- ceiling(exp(rnorm(50,mean=log(50))))
 # the rarefaction quota and SQS quorum are low because samples are poor
 # some functions may crash if the distributions are extreme
 
-E <- matrix(nrow=50,ncol=19,dimnames=list(1:50,c('R','S','BS','Chao 1','cJ1','alpha','theta','GS','J1','J2','exp2e','odds','PLN','Weib','H','D','rare','ISCE','SQS')))
+E <- matrix(nrow=50,ncol=19,dimnames=list(1:50,c('R','S','BS','Chao 1','cJ1','alpha','theta','GS','J1','J2','HPE','odds','PLN','Weib','H','D','rare','ISCE','SQS')))
 
 for (i in 1:50)	{
 	cat('\rsample',i)
@@ -133,7 +135,7 @@ for (i in 1:50)	{
 		E[i,8] <- g$richness
 	E[i,9] <- jackknife1(n)
 	E[i,10] <- jackknife2(n)
-	E[i,11] <- exp2e(n)$richness
+	E[i,11] <- halfpower(n)$richness
 	E[i,12] <- sodds(n)$richness
 	p <- try(pln(n))
 	if (length(p) > 1)
@@ -152,11 +154,11 @@ cat('\n')
 # methods that work well yield points that are close to the line of unity
 
 plot(E[,'R'],E[,'odds'],xlab='True richness',ylab='Estimate',log='xy',xlim=c(10,1000),ylim=c(10,1000),cex=1.1,col='blue')
-points(E[,'R'],E[,'exp2e'],col='gold')
+points(E[,'R'],E[,'HPE'],col='gold')
 points(E[,'R'],E[,'SQS'],col='purple')
 points(E[,'R'],E[,'Chao 1'],col='red')
 abline(0,1)
-legend(12,1000,legend=c('odds','exp2e','SQS','Chao 1'),col=c('blue','gold','purple','red'),bty='n',pch=1,cex=0.7)
+legend(12,1000,legend=c('odds','HPE','SQS','Chao 1'),col=c('blue','gold','purple','red'),bty='n',pch=1,cex=0.7)
 
 # the ratio of estimated to true richness is close to 1 for a good method
 # only methods yielding full richness estimates are shown here

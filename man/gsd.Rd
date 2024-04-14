@@ -53,7 +53,7 @@ gsd(n[n > 0])$richness
 n <- rodds(100,1)
 gsd(n[n > 0])$richness
 
-# exponential-to-e distribution
-n <- rexp2e(100,1)
+# half-power exponential distribution
+n <- rhp(100,1)
 gsd(n[n > 0])$richness
 }

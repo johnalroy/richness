@@ -42,8 +42,8 @@ m <- m[rowSums(m) > 0,]
 m[m > 1] <- 1
 chao2(rowSums(m),ncol(m))
 
-# exponential-to-e distribution
-m <- matrix(rexp2e(1000,1),100,10)
+# half-power exponential distribution
+m <- matrix(rhp(1000,1),100,10)
 m <- m[rowSums(m) > 0,]
 m[m > 1] <- 1
 chao2(rowSums(m),ncol(m))
