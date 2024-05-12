@@ -1,1 +1,1 @@
-export(AICc2LL,bat,bsd,cJ1,chao1,chao2,dgeoms,doubletons,exp2e,fisher,gsd,halfpower,isce,jackknife1,jackknife2,logd,nbin,odds2,pln,rarefy,rexp2e,rhp,rodds,rodds2,sadrad,saturate,shannon,simpson,singletons,sodds,sqs,weibull,zipf,zsm)
+export(AICc2LL,bat,bsd,cJ1,chao1,chao2,dgeoms,doubletons,exp2e,fisher,gsd,halfpower,ipower,isce,jackknife1,jackknife2,logd,nbin,odds2,pln,rarefy,rexp2e,rhp,ripower,rodds,rodds2,sadrad,saturate,shannon,simpson,singletons,sodds,sqs,weibull,zipf,zsm)
