@@ -15,7 +15,7 @@ A vector of integer counts representing the number of individuals per species.
 }
 }
 \details{
-This function fits the discrete Weibull distribution of Nakagawa and Osaki (1975), returning the AICc fit statistic and the rank and species abundance distributions in addition to estimated richness and the distribution's governing parameters (scale and shape). The model is fit by optimising the AICc using the \emph{stats4} function \emph{lme}, as with this package's other functions.
+This function fits the discrete Weibull distribution of Nakagawa and Osaki (1975), returning the AICc fit statistic and the rank and species abundance distributions in addition to estimated richness and the distribution's governing parameters (scale and shape). The model is fit by optimising the AICc using the \emph{stats4} function \emph{lme}, as with some of this package's other functions.
 The likelihood calculation that yields the AICc is explained in the package details.
 
 This function occasionally crashes because the two-parameter likelihood surface is flat, leading \emph{lme} to consider extreme combinations of values that cause errors.

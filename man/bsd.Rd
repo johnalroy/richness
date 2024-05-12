@@ -18,7 +18,7 @@ A vector of integer counts representing the number of individuals per species.
 This function fits the distribution described by MacArthur (1957), returning the corrected Akaike information criterion (AICc) fit statistic and the rank and species abundance distributions in addition to a richness estimate.
 The estimate determines the other returned values. 
 As originally described, observed richness was assumed to be a fixed parameter and not extrapolated.
-Here, richness is estimated by optimising the AICc using the \emph{stats4} function \emph{lme}, as with this package's other functions.
+Here, richness is estimated by optimising the AICc using \emph{optimise}, as with most of this package's other functions.
 The likelihood calculation that yields the AICc is explained in the package details.
 
 The broken stick model is so poor that it may not be possible to fit it sensiblyby likelihood. Specifically, a returned richness value of two times raw richness most often suggests that no good solution was found.

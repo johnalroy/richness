@@ -19,6 +19,8 @@ This function fits the geometric series distribution to a species abundance dist
 The richness estimate is just the observed number of species divided by 1 minus \emph{k}.
 The likelihood calculation that yields the AICc is explained in the package details.
 
+As with other distributions in this package, the geometric series can be matched precisely with data derived from a simple birth-death simulation. The model is fully neutral except that it assumes individual species have fixed and identical death rates across all species plus birth rates that are fixed through time but vary among species, tracking the exponential distribution. It is expected to be realistic whenever traits determine demographic properties.
+
 The geometric series is a special one-parameter case of the negative binomial that only allows the probability term to vary.
 \link{nbin} allows users to vary the negative binomial's size parameter.
 

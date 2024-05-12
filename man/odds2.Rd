@@ -29,7 +29,7 @@ The analytical expression for the probability mass function (PMF) is lengthy. Th
 
 where m = \emph{mu} and x = the positive integer series starting with 1, which corresponds with the count classes (e.g., classes 1 and 2 are the respective counts of singletons and doubletons). The equation assumes that all counts are greater than zero.
 
-The model is fit by optimising the AICc using the \emph{stats4} function \emph{lme}, as with this package's other functions.
+The model is fit by optimising the AICc using \emph{optimise}, as with most of this package's other functions.
 The likelihood calculation that yields the AICc is explained in the package details.
 
 The function \link{rodds2} computes random integers based on the distribution.

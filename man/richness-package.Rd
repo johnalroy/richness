@@ -12,12 +12,12 @@
 
 This package implements various species abundance distribution, richness, and diversity estimators that work on arrays of species counts.
 
-The package fits count vectors to the broken stick (\link{bsd}), discrete Weibull (\link{weibull}), exponential-to-\emph{e} (\link{exp2e}), geometric series (\link{gsd}), half-power exponential (\link{halfpower}), log series (\link{logd}), negative binomial (\link{nbin}), odds-2 (\link{odds2}), Poisson log normal (\link{pln}), scaled odds (\link{sodds}), zero-sum multinomial (\link{zsm}), and Zipf (\link{zipf}) distributions.
-The exponential-to-\emph{e}, half-power exponential, odds-2, and scaled odds distributions have been overlooked previously.
-There are random number generators respectively based on these four distributions (\link{rexp2e}, \link{rhp}, \link{rodds2}, and \link{rodds}).
+The package fits count vectors to the broken stick (\link{bsd}), discrete Weibull (\link{weibull}), exponential-to-\emph{e} (\link{exp2e}), geometric series (\link{gsd}), half-power exponential (\link{halfpower}), inverse power (\link{ipower}), log series (\link{logd}), negative binomial (\link{nbin}), odds-2 (\link{odds2}), Poisson log normal (\link{pln}), scaled odds (\link{sodds}), zero-sum multinomial (\link{zsm}), and Zipf (\link{zipf}) distributions.
+The exponential-to-\emph{e}, half-power exponential, inverse power, odds-2, and scaled odds distributions have been overlooked previously.
+There are random number generators respectively based on these five distributions (\link{rexp2e}, \link{rhp}, \link{ripower}, \link{rodds2}, and \link{rodds}).
 The function \link{saturate} fits a saturated model that assumes a geometric sampling process.
 
-The functions \emph{bsd}, \emph{exp2e}, \emph{gsd}, \emph{halfpower}, \emph{nbin}, \emph{odds2}, \emph{sodds}, and \emph{weibull} depend only on the utility function \link{sadrad}.
+The functions \emph{bsd}, \emph{exp2e}, \emph{gsd}, \emph{halfpower}, \emph{ipower}, \emph{nbin}, \emph{odds2}, \emph{sodds}, and \emph{weibull} depend only on the utility function \link{sadrad}.
 \emph{sadrad} finds a series of counts that are evenly spaced across a species abundance distribution.
 The other distribution functions also depend on the packages \emph{poilog} and \emph{sads}.
 
@@ -34,10 +34,12 @@ The utility functions \link{doubletons} and \link{singletons} can be used to rec
 
 Distributions are fit by optimising the corrected Akaike information criterion (AICc: Hurvich and Tsai 1993).
 The AICc is based on the negative log likelihood of the data.
+
 Here, the likelihood is just the product of the probabilities of obtaining the indivual species tallies given the hypothesised species abundance distribution.
 Because combinatoric terms are constant across all potential model parameters, this simple calculation yields the same solution as computing multinomial probabilities of the observed count distribution given different parameters.
+Package \emph{sads} uses the same likelihood function.
 
-The expression used in the relevant functions is:
+The likelihood expression used in the relevant functions is:
 
 \code{
 -sum(s[u] * log(p[u]))
@@ -71,6 +73,10 @@ Hurvich, C. M. and C. L. Tsai. 1993. A corrected Akaike information criterion fo
 \seealso{
 }
 \examples{
+# please be patient because the examples take some time to run
+# some warnings will be printed
+# the reason is that two-parameter models can be difficult
+
 # create a single vector of counts (= a sample) using Poisson sampling
 # the underlying distribution is log normal and uneven
 # there are 100 species with an average abundance of 2
@@ -96,6 +102,7 @@ legend('topright',c('data','odds','LS','PLN'),col=c('black','blue','red','green4
 # calculate species richness estimates based on several methods
 
 halfpower(n)$richness
+ipower(n)$richness
 sodds(n)$richness
 pln(n)$richness
 chao1(n)
@@ -103,7 +110,7 @@ chao1(n)
 # carry out a simulation analysis with 50 samples
 
 # the true number of species R in each sample is log normally distributed
-# therefore, the scaled odds is the wrong model for the data (in principle)
+# therefore, the new models are model for the data (in principle)
 
 R <- ceiling(exp(rnorm(50,mean=log(50))))
 
@@ -113,7 +120,7 @@ R <- ceiling(exp(rnorm(50,mean=log(50))))
 # the rarefaction quota and SQS quorum are low because samples are poor
 # some functions may crash if the distributions are extreme
 
-E <- matrix(nrow=50,ncol=19,dimnames=list(1:50,c('R','S','BS','Chao 1','cJ1','alpha','theta','GS','J1','J2','HPE','odds','PLN','Weib','H','D','rare','ISCE','SQS')))
+E <- matrix(nrow=50,ncol=20,dimnames=list(1:50,c('R','S','BS','Chao 1','cJ1','alpha','theta','GS','J1','J2','HPE','IP','odds','PLN','Weib','H','D','rare','ISCE','SQS')))
 
 for (i in 1:50)	{
 	cat('\rsample',i)
@@ -130,24 +137,25 @@ for (i in 1:50)	{
 	E[i,5] <- cJ1(n)
 	E[i,6] <- fisher(n)
 	E[i,7] <- zsm(n)$theta
-	g <- try(gsd(n))
+	g <- try(gsd(n),silent=T)
 	if (length(g) > 1)
 		E[i,8] <- g$richness
 	E[i,9] <- jackknife1(n)
 	E[i,10] <- jackknife2(n)
 	E[i,11] <- halfpower(n)$richness
-	E[i,12] <- sodds(n)$richness
-	p <- try(pln(n))
+	E[i,12] <- ipower(n)$richness
+	E[i,13] <- sodds(n)$richness
+	p <- try(pln(n),silent=T)
 	if (length(p) > 1)
-		E[i,13] <- p$richness
-	w <- try(weibull(n))
+		E[i,14] <- p$richness
+	w <- try(weibull(n),silent=T)
 	if (length(w) > 1)
-		E[i,14] <- w$richness
-	E[i,15] <- shannon(n)
-	E[i,16] <- simpson(n)
-	E[i,17] <- rarefy(n,25)
-	E[i,18] <- isce(n)$asymptotic.richness
-	E[i,19] <- sqs(n,0.25)$subsampled.richness / 0.25
+		E[i,15] <- w$richness
+	E[i,16] <- shannon(n)
+	E[i,17] <- simpson(n)
+	E[i,18] <- rarefy(n,25)
+	E[i,19] <- isce(n)$asymptotic.richness
+	E[i,20] <- sqs(n,0.25)$subsampled.richness / 0.25
 }
 cat('\n')
 
@@ -169,22 +177,22 @@ legend(12,1000,legend=c('odds','HPE','SQS','Chao 1'),col=c('blue','gold','purple
 
 E[E < 0] <- NA
 
-boxplot(E[,c(3:6,8:13,18)] / E[,'R'],log='y')
+boxplot(E[,c(3:6,8:14,19)] / E[,'R'],log='y')
 abline(0,0)
 
 # ordinate the data using principal coordinates analysis
 # estimators that are closer to R (red circle) are more accurate
 
-p <- cmdscale(dist(t(log(na.omit(E[,-14] / E[,'R'])))))
+p <- cmdscale(dist(t(log(na.omit(E[,-15] / E[,'R'])))))
 plot(p,cex=0)
-text(p,labels=colnames(E[,-14]),cex=0.7,xpd=NA)
+text(p,labels=colnames(E[,-15]),cex=0.7,xpd=NA)
 points(p['R',1],p['R',2],col='red',cex=1.5)
 
 # remove measures that reflect evenness strongly and try again
 
-p <- cmdscale(dist(t(log(na.omit(E[,c(1:13,18)] / E[,'R'])))))
+p <- cmdscale(dist(t(log(na.omit(E[,c(1:14,19)] / E[,'R'])))))
 plot(p,cex=0)
-text(p,labels=colnames(E[,c(1:13,18)]),cex=0.7,xpd=NA)
+text(p,labels=colnames(E[,c(1:14,19)]),cex=0.7,xpd=NA)
 points(p['R',1],p['R',2],col='red',cex=1.5)
 
 # cluster analysis also shows which measures relate to true richness

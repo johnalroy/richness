@@ -15,7 +15,7 @@ A vector of integer counts representing the number of individuals per species.
 }
 }
 \details{
-This function fits the negative binomial distribution, returning the AICc fit statistic and the rank and species abundance distributions in addition to estimated richness and the distribution's governing parameters (size and probability). The model is fit by optimising the AICc using the \emph{stats4} function \emph{lme}, as with this package's other functions.
+This function fits the negative binomial distribution, returning the AICc fit statistic and the rank and species abundance distributions in addition to estimated richness and the distribution's governing parameters (size and probability). The model is fit by optimising the AICc using the \emph{stats4} function \emph{lme}, as with some of this package's other functions.
 The likelihood calculation that yields the AICc is explained in the package details.
 
 The geometric series is a special case of the negative binomial in which the size parameter is fixed at 1. The \link{gsd} function allows fitting this version of the model.
