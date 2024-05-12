@@ -11,7 +11,7 @@ halfpower<-function(n)	{
 	u <- unique(n2)
 	x <- (1:(2^14 + 1))^0.5
 	like<-function(l)	{
-		if (l <= -1)
+		if (l <= 0)
 			return(1e10)
 		p <- -diff(exp(-l * x)) / exp(-l)
 		if (is.nan(p[1]) || p[n2[S2]] < 1e-100 || min(p[u]) == 0 || sum(p[u]) > 1 - 1e-120)
@@ -21,8 +21,8 @@ halfpower<-function(n)	{
 			return(1e10)
 		ll
 	}
-	l <- coef(stats4::mle(like,lower=list(l=-1),upper=list(l=1e6),start=list(l=0.01)))
-	if (l == -1 || l == 1e6)
+	l <- optimise(like,interval=c(0,10),maximum=F)$minimum
+	if (l == 0 || l == 10)
 		return(list('richness' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(l) + 2 + 4 / (S2 - 2)
 	x <- (1:(2^20 + 1))^0.5

@@ -22,7 +22,7 @@ exp2e<-function(n)	{
 			return(1e10)
 		ll
 	}
-	l <- coef(stats4::mle(like,lower=list(l=-1),upper=list(l=100),start=list(l=1)))
+	l <- optimise(like,interval=c(-1,100),maximum=F)$minimum
 	if (l == -1 || l == 100)
 		return(list('richness' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(l) + 2 + 4 / (S2 - 2)

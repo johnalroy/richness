@@ -21,7 +21,7 @@ odds2<-function(n)	{
 			return(1e10)
 		ll
 	}
-	m <- coef(stats4::mle(like,lower=list(m=0),upper=list(m=1e6),start=list(m=1)))
+	m <- optimise(like,interval=c(0,1e6),maximum=F)$minimum
 	if (m == 0 || m == 1e6)
 		return(list('richness' = NA, 'mu' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(m) + 2 + 4 / (S2 - 2)

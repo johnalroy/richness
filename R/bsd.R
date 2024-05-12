@@ -24,8 +24,8 @@ bsd<-function(n)	{
 			return(1e10)
 		ll
 	}
-	S <- coef(stats4::mle(like,lower=list(S=length(n)),upper=list(S=100 * length(n)),start=list(S=2 * length(n))))
-	if (S == 100 * length(n))	{
+	S <- optimise(like,interval=c(length(n),20 * length(n)),maximum=F)$minimum
+	if (S == 20 * length(n))	{
 		warning('richness estimate is out of range')
 		return(list('richness' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	}

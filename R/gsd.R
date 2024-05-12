@@ -24,7 +24,7 @@ gsd<-function(n)	{
 			return(1e10)
 		ll
 	}
-	l <- coef(stats4::mle(like,lower=list(l=-100),upper=list(l=1e3),start=list(l=log(mean(n)))))
+	l <- optimise(like,interval=c(-100,1e3),maximum=F)$minimum
 	if (l == -100 || l == 1e3)
 		return(list('richness' = NA, 'k' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(l) + 2 + 4 / (S2 - 2)

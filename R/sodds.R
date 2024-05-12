@@ -22,7 +22,7 @@ sodds<-function(n)	{
 			return(1e10)
 		ll
 	}
-	m <- coef(stats4::mle(like,lower=list(m=-1),upper=list(m=1e4),start=list(m=1)))
+	m <- optimise(like,interval=c(-1,1e4),maximum=F)$minimum
 	if (m == -1 || m == 1e4)
 		return(list('richness' = NA, 'mu' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(m) + 2 + 4 / (S2 - 2)
