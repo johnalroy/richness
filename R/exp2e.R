@@ -22,7 +22,7 @@ exp2e<-function(n)	{
 			return(1e10)
 		ll
 	}
-	l <- optimise(like,interval=c(-1,100),maximum=F)$minimum
+	l <- optimise(like,interval=c(-1,10),maximum=F)$minimum
 	if (l == -1 || l == 100)
 		return(list('richness' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(l) + 2 + 4 / (S2 - 2)
