@@ -1,4 +1,4 @@
-bat<-function(x,points,func='sodds')	{
+bat<-function(x,points,func='cegsML')	{
 	if (! is.matrix(x) || ! is.numeric(x))	{
 		warning('The first supplied argument must be a matrix of non-zero integers')
 		return(NA)
