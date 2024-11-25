@@ -9,25 +9,24 @@ weibull<-function(n)	{
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
 	u <- unique(n2)
-	x <- 1:2^14
-	x1 <- 1:2^14 + 1
 	like<-function(a,b)	{
-		if (a < 1e-6 || b < 1e-6)
+		if (a <= 0 || b <= 0)
 			return(1e10)
-		p <- (exp(-(x / a)^b) - exp(-(x1 / a)^b)) / exp(-1 / a^b)
-		if (is.nan(p[1]) || sum(p) == 0 || min(p[u]) == 0 || sum(p[u]) > 1 - 1e-120)
+		p <- (a^u^b - a^(u + 1)^b) / a
+		if (is.nan(p[1]) || p[length(p)] < 1e-100 || min(p) == 0)
 			return(1e10)
-		ll <- -sum(s[u] * log(p[u]))
+		ll <- -sum(s[u] * log(p))
 		if (is.infinite(ll) || is.nan(ll))
 			return(1e10)
 		ll
 	}
-	c <- coef(stats4::mle(like,lower=list(a=1e-6,b=1e-6),upper=list(a=1e2,b=5),start=list(a=1,b=0.2)))
-	a <- c[1]
-	b <- c[2]
-	if (a < 1e-5 || a > 1e3 - 1 || b < 1e-5 || b > 9.99)
+	cf <- coef(stats4::mle(like,lower=list(a=0,b=0),upper=list(a=1,b=5),start=list(a=0.5,b=0.2)))
+	a <- cf[1]
+	b <- cf[2]
+	if (a == 0 || a ==1)
 		return(list('richness' = NA, 'scale' = NA, 'shape' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
-	p <- (exp(-(x / a)^b) - exp(-(x1 / a)^b)) / exp(-1 / a^b)
-	aicc <- 2 * like(a,b) + 4 + 12 / (S2- 3)
-	return(list('richness' = as.numeric(S / exp(-1 / a^b)), 'scale' = as.numeric(a), 'shape' = as.numeric(b), 'AICc' = as.numeric(aicc), 'fitted.RAD' = sadrad(S,p), 'fitted.SAD' = as.numeric(p[1:2^12])))
+	aicc <- 2 * like(a,b) + 4 + 12 / (S2 - 3)
+	x <- 1:(2^20 + 1)
+	p <- -diff(a^x^b) / a
+	return(list('richness' = as.numeric(S / a), 'scale' = as.numeric(a), 'shape' = as.numeric(b), 'AICc' = aicc, 'fitted.RAD' = sadrad(length(n),p), 'fitted.SAD' = p[1:2^12]))
 }
