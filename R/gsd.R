@@ -1,6 +1,6 @@
 gsd<-function(n)	{
 	if (length(n) < 3 || max(n) < 3)
-		return(list('richness' = NA, 'k' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
+		return(list('richness' = NA, 'g' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	library(stats4)
 	S <- length(n)
 	n2 <- n[n <= 2^14]
@@ -9,14 +9,12 @@ gsd<-function(n)	{
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
 	u <- unique(n2)
-	x <- 1:2^14
-	x1 <- x + 1
-	like<-function(l)	{
-		l <- exp(-l)
-		if (l <= -100)
+	x <- 1:2^14 - 1
+	like<-function(g)	{
+		g <- g^10
+		if (g <= 0 || g >= 1)
 			return(1e10)
-		p <- exp(x * log(1 / l) - x1 * log(1 / l + 1))
-		p <- p / sum(p)
+		p <- (1 - g)^x * g
 		if (is.nan(p[1]) || p[n2[S2]] < 1e-100 || min(p[u]) == 0 || sum(p[u]) > 1 - 1e-120)
 			return(1e10)
 		ll <- -sum(s[u] * log(p[u]))
@@ -24,13 +22,11 @@ gsd<-function(n)	{
 			return(1e10)
 		ll
 	}
-	l <- optimise(like,interval=c(-100,1e3),maximum=F)$minimum
-	if (l == -100 || l == 1e3)
-		return(list('richness' = NA, 'k' = NA, 'lambda' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
-	aicc <- 2 * like(l) + 2 + 4 / (S2 - 2)
-	x <- 1:2^20
-	x1 <- x + 1
-	l <- exp(-l)
-	p <- exp(x * log(1 / l) - x1 * log(1 / l + 1)) * (l + 1)
-	return(list('richness' = as.numeric(S * (l + 1)), 'k' = as.numeric(l / (l + 1)), 'lambda' = as.numeric(l), 'AICc' = aicc, 'fitted.RAD' = sadrad(length(n),p), 'fitted.SAD' = p[1:2^12]))
+	g <- optimise(like,interval=c(0,1)^0.1,maximum=F)$minimum^10
+	if (g <= 0 || g >= 1)
+		return(list('richness' = NA, 'g' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
+	aicc <- 2 * like(g^0.1) + 2 + 4 / (S2 - 2)
+	x <- 1:2^20 - 1
+	p <- (1 - g)^x * g
+	return(list('richness' = as.numeric(S / (1 - g)), 'p' = as.numeric(g), 'AICc' = aicc, 'fitted.RAD' = sadrad(length(n),p), 'fitted.SAD' = p[1:2^12]))
 }
