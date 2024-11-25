@@ -47,15 +47,15 @@ Motomura, I. 1932. A statistical treatment of associations. \emph{Japanese Journ
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+gsd(n[n > 0])$richness
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 gsd(n[n > 0])$richness
 
 # scaled odds distribution
 n <- rodds(100,1)
-gsd(n[n > 0])$richness
-
-# half-power exponential distribution
-n <- rhp(100,1)
 gsd(n[n > 0])$richness
 }

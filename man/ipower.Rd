@@ -45,6 +45,10 @@ The function \link{ripower} computes random integers based on the distribution.
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+ipower(n[n > 0])$richness
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 ipower(n[n > 0])$richness

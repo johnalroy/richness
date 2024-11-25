@@ -47,16 +47,16 @@ Hurlbert, S. H. 1971. The nonconcept of species diversity: a critique and altern
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+isce(n[n > 0])
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 isce(n[n > 0])
 
 # scaled odds distribution
 n <- rodds(100,1)
-isce(n[n > 0])
-
-# half-power exponential distribution
-n <- rhp(100,1)
 isce(n[n > 0])
 
 # graph the results

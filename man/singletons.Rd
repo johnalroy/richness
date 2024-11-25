@@ -28,15 +28,15 @@ Chao, A. and L. Jost. 2012. Coverage-based rarefaction and extrapolation: standa
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+singletons(n[n > 0],50)
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 singletons(n[n > 0],50)
 
 # scaled odds distribution
 n <- rodds(100,1)
-singletons(n[n > 0],50)
-
-# half-power exponential distribution
-n <- rhp(100,1)
 singletons(n[n > 0],50)
 }

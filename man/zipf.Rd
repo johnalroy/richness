@@ -32,15 +32,15 @@ Newman, M. E. J. 2005. Power laws, Pareto distributions and Zipf's law. \emph{Co
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+zipf(n[n > 0])$fitted.RAD
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 zipf(n[n > 0])$fitted.RAD
 
 # scaled odds distribution
 n <- rodds(100,1)
-zipf(n[n > 0])$fitted.RAD
-
-# half-power exponential distribution
-n <- rhp(100,1)
 zipf(n[n > 0])$fitted.RAD
 }

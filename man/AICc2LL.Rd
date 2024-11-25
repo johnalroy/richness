@@ -30,12 +30,12 @@ This function takes output from any of the distribution fitting routines include
 John Alroy
 }
 \examples{
-# generate a random list of non-zero counts from the scaled odds distribution
-n <- rodds(100)
+# generate a random list of non-zero counts from the CEGS distribution
+n <- rcegs(100)
 n <- n[n > 0]
 
-# fit the scaled odds distribution and save the AICc
-a <- sodds(n)$AICc
+# fit the CEGS distribution and save the AICc
+a <- cegsML(n)$AICc
 
 # convert to a log likelihood
 AICc2LL(n,a,2)

@@ -45,16 +45,16 @@ The function \link{rodds2} computes random integers based on the distribution.
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+odds2(n[n > 0])$richness
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 odds2(n[n > 0])$richness
 
 # scaled odds distribution
 n <- rodds(100,1)
-odds2(n[n > 0])$richness
-
-# half-power exponential distribution
-n <- rhp(100,1)
 odds2(n[n > 0])$richness
 
 # odds-2 distribution

@@ -43,8 +43,8 @@ John Alroy
 # prepare the probability matrix
 dg <- dgeoms()
 
-# generate a random list of non-zero counts from the scaled odds distribution
-n <- rodds(100)
+# generate a random list of non-zero counts from the CEGS distribution
+n <- rcegs(100)
 n <- n[n > 0]
 
 # fit the bootstrapped distribution
@@ -54,9 +54,9 @@ s <- saturate(n,100,dg)
 plot(rev(sort(n)),type='l',log='y',xlab='Rank of count',ylab='Count of individuals')
 lines(rev(s$fitted.RAD),col='red')
 
-# compare the log likelihoods to the observed values for fitted model
+# compare the log likelihoods to the observed values for fitted models
 s$mean.LL
+AICc2LL(n,cegsML(n)$AICc)
 AICc2LL(n,sodds(n)$AICc)
-AICc2LL(n,halfpower(n)$AICc)
 AICc2LL(n,logd(n)$AICc)
 }

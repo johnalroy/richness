@@ -1,7 +1,7 @@
 \name{rexp2e}
 \alias{rexp2e}
 \title{
-Random generation from the exponential-to-\emph{e} distribution
+Random generation from the exponential-to-e distribution
 }
 \description{
 Draws counts at random from the exponential-to-\emph{e} (exp2e) distribution.

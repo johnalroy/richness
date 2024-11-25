@@ -29,6 +29,10 @@ Hurlbert, S. H. 1971. The nonconcept of species diversity: a critique and altern
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+rarefy(n[n > 0],50)
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 rarefy(n[n > 0],50)
@@ -37,7 +41,4 @@ rarefy(n[n > 0],50)
 n <- rodds(100,1)
 rarefy(n[n > 0],50)
 
-# half-power exponential distribution
-n <- rhp(100,1)
-rarefy(n[n > 0],50)
 }

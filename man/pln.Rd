@@ -33,15 +33,15 @@ Bulmer, M. G. 1974. On fitting the Poisson lognormal distribution to species abu
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+pln(n[n > 0])$richness
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 pln(n[n > 0])$richness
 
 # scaled odds distribution
 n <- rodds(100,1)
-pln(n[n > 0])$richness
-
-# half-power exponential distribution
-n <- rhp(100,1)
 pln(n[n > 0])$richness
 }

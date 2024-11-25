@@ -24,15 +24,15 @@ Alroy, J. 2020. On four measures of taxonomic richness. \emph{Paleobiology} 46:1
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+cJ1(n[n > 0])
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 cJ1(n[n > 0])
 
 # scaled odds distribution
 n <- rodds(100,1)
-cJ1(n[n > 0])
-
-# half-power exponential distribution
-n <- rhp(100,1)
 cJ1(n[n > 0])
 }

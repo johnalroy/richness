@@ -36,8 +36,8 @@ The points must be numbers, but they can be negative. They do not need to be sup
 The computation hinges on comparing different richness estimates, and it only makes sense for them to be computed in the same way.
 Therefore, only a single richness estimation function can be supplied.
 The richness estimation function must return a "richness" value.
-The appropriate functions in this package are \link{bsd}, \link{exp2e}, \link{gsd}, \link{halfpower}, \link{nbin}, \link{odds2}, \link{pln}, \link{sodds}, and \link{weibull}.
-\emph{sodds} is the default because it fits uneven data sets well, but other functions such as \emph{halfpower} and \emph{odds2} should be investigated.
+The appropriate functions in this package are \link{bsd}, \link{cegsB}, \link{cegsML}, \link{exp2e}, \link{gsd}, \link{halfpower}, \link{nbin}, \link{odds2}, \link{pln}, \link{sodds}, and \link{weibull}.
+\emph{cegsML} is the default because it fits uneven data sets well, but other functions such as \emph{sodds} should be investigated.
 The best distribution will yield the lowest AICc values.
 Functions not returning richness estimates (such as \link{logd}), returning relative estimates (\link{rarefy} or \link{sqs}), or based on simple indices (such as \link{chao1}) are not designed to work with \emph{bat}.
 }
@@ -51,9 +51,9 @@ Functions not returning richness estimates (such as \link{logd}), returning rela
 John Alroy
 }
 \examples{
-# draw a random matrix of counts from the scaled odds distribution
+# draw a random matrix of counts from the CEGS distribution
 m <- matrix(0,100,10)
-n <- rodds(100,5)
+n <- rcegs(100,0.25)
 for (i in 1:nrow(m))	{
 	t <- table(sample(1:10,n[i],replace=T))
 	m[i,as.numeric(names(t))] <- t
@@ -66,6 +66,6 @@ bat(m,points=runif(10))
 # reverse the ordering of the point locations
 bat(m,points=10:1)
 
-# use the half-power distribution instead of the scaled odds distribution
-bat(m,func='halfpower')
+# use the scaled odds distribution instead of the CEGS distribution
+bat(m,func='sodds')
 }

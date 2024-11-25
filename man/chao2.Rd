@@ -27,6 +27,12 @@ Chao, A. 1987. Estimating the population size for capture-recapture data with un
 John Alroy
 }
 \examples{
+# CEGS distribution
+m <- matrix(rcegs(1000),100,10)
+m <- m[rowSums(m) > 0,]
+m[m > 1] <- 1
+chao2(rowSums(m),ncol(m))
+
 # Poisson log normal distribution
 m <- matrix(rpois(1000,exp(rnorm(100,sd=2))),100,10)
 m <- m[rowSums(m) > 0,]
@@ -38,12 +44,6 @@ n <- rodds(100,1)
 m <- matrix(NA,100,10)
 for (i in 1:100)
 	m[i,] <- rmultinom(1:10,n[i],rep(0.1,10))
-m <- m[rowSums(m) > 0,]
-m[m > 1] <- 1
-chao2(rowSums(m),ncol(m))
-
-# half-power exponential distribution
-m <- matrix(rhp(1000,1),100,10)
 m <- m[rowSums(m) > 0,]
 m[m > 1] <- 1
 chao2(rowSums(m),ncol(m))

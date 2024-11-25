@@ -36,15 +36,15 @@ May, R. M. 1975. Patterns of species abundance and diversity. Pp. 81-120 in M. L
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+logd(n[n > 0])$fitted.RAD
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 logd(n[n > 0])$fitted.RAD
 
 # scaled odds distribution
 n <- rodds(100,1)
-logd(n[n > 0])$fitted.RAD
-
-# half-power exponential distribution
-n <- rhp(100,1)
 logd(n[n > 0])$fitted.RAD
 }

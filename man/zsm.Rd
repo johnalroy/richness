@@ -34,15 +34,15 @@ Hubbell, S. P. 2001. The unified neutral theory of biodiversity and biogeography
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+zsm(n[n > 0])$fitted.RAD
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 zsm(n[n > 0])$fitted.RAD
 
 # scaled odds distribution
 n <- rodds(100,1)
-zsm(n[n > 0])$fitted.RAD
-
-# half-power exponential distribution
-n <- rhp(100,1)
 zsm(n[n > 0])$fitted.RAD
 }

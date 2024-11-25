@@ -30,15 +30,15 @@ Shannon, C. E. 1948. A mathematical theory of communication. \emph{Bell System T
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+shannon(n[n > 0])
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 shannon(n[n > 0])
 
 # scaled odds distribution
 n <- rodds(100,1)
-shannon(n[n > 0])
-
-# half-power exponential distribution
-n <- rhp(100,1)
 shannon(n[n > 0])
 }

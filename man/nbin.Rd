@@ -32,15 +32,15 @@ The geometric series is a special case of the negative binomial in which the siz
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+nbin(n[n > 0])$fitted.RAD
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 nbin(n[n > 0])$fitted.RAD
 
 # scaled odds distribution
 n <- rodds(100,1)
-nbin(n[n > 0])$fitted.RAD
-
-# half-power exponential distribution
-n <- rhp(100,1)
 nbin(n[n > 0])$fitted.RAD
 }

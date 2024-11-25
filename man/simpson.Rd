@@ -30,15 +30,15 @@ Simpson, E. H. 1949. Measurement of diversity. \emph{Nature} 163:688.
 John Alroy
 }
 \examples{
+# CEGS distribution
+n <- rcegs(100)
+simpson(n[n > 0])
+
 # Poisson log normal distribution
 n <- rpois(100,exp(rnorm(100,sd=2)))
 simpson(n[n > 0])
 
 # scaled odds distribution
 n <- rodds(100,1)
-simpson(n[n > 0])
-
-# half-power exponential distribution
-n <- rhp(100,1)
 simpson(n[n > 0])
 }
