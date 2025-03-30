@@ -15,10 +15,10 @@ A vector of integer counts representing the number of individuals per species.
 }
 }
 \details{
-This function implements the corrected first-order jackknife equation of Carter and Alroy (2023), only returning the richness estimate.
+This function implements the geometric series index of Kerr and Alroy (2023), only returning the richness estimate.
 }
 \references{
-Kerr, M. R. and J. Alroy. 2020. Body size and abundance are decoupled from species richness in Australian marine bivalves. \emph{Frontiers of Biogeography} 15(4). http://dx.doi.org/10.21425/F5FBG58651
+Kerr, M. R. and J. Alroy. 2023. Body size and abundance are decoupled from species richness in Australian marine bivalves. \emph{Frontiers of Biogeography} 15(4). http://dx.doi.org/10.21425/F5FBG58651
 }
 \author{
 John Alroy
