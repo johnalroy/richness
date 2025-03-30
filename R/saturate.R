@@ -8,7 +8,7 @@ saturate<-function(n,trials=100,dgeoms=NA)	{
 	s <- array(dim=2^14,data=0)
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
-	u <- unique(n2)
+	u <- which(s > 0)
 	x <- 1:2^14
 	sum_p <- array(dim=2^14,data=0)
 	ll <- array(dim=trials)

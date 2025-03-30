@@ -1,5 +1,5 @@
 gsd<-function(n)	{
-	if (length(n) < 3 || max(n) < 3)
+	if (length(table(n)) < 3 || max(n) < 3)
 		return(list('richness' = NA, 'g' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	library(stats4)
 	S <- length(n)
@@ -8,7 +8,7 @@ gsd<-function(n)	{
 	s <- array(dim=2^14,data=0)
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
-	u <- unique(n2)
+	u <- which(s > 0)
 	x <- 1:2^14 - 1
 	like<-function(g)	{
 		g <- g^10

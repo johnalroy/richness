@@ -1,5 +1,5 @@
 bsd<-function(n)	{
-	if (length(n) < 3 || max(n) < 3)
+	if (length(table(n)) < 3 || max(n) < 3)
 		return(list('richness' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	library(stats4)
 	R <- length(n)
@@ -9,7 +9,7 @@ bsd<-function(n)	{
 	s <- array(dim=2^14,data=0)
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
-	u <- unique(n2)
+	u <- which(s > 0)
 	like<-function(S)	{
 		p <- (1 - 1:N / N)^(S - 2) * (S - 1) / N
 		p <- p[1:N] / sum(p[1:N])
@@ -25,7 +25,7 @@ bsd<-function(n)	{
 		ll
 	}
 	S <- optimise(like,interval=c(length(n),20 * length(n)),maximum=F)$minimum
-	if (S == 20 * length(n))	{
+	if (S > 20 * length(n) - 1)	{
 		warning('richness estimate is out of range')
 		return(list('richness' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	}

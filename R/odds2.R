@@ -1,5 +1,5 @@
 odds2<-function(n)	{
-	if (length(n) < 3 || max(n) < 3)
+	if (length(table(n)) < 3 || max(n) < 3)
 		return(list('richness' = NA, 'mu' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	library(stats4)
 	S <- length(n)
@@ -8,7 +8,7 @@ odds2<-function(n)	{
 	s <- array(dim=2^14,data=0)
 	t <- table(n2)
 	s[as.numeric(names(t))] <- t
-	u <- unique(n2)
+	u <- which(s > 0)
 	x <- 1:(2^14 + 1)
 	like<-function(m)	{
 		if (m <= 0)
@@ -21,7 +21,7 @@ odds2<-function(n)	{
 			return(1e10)
 		ll
 	}
-	m <- optimise(like,interval=c(0,1e6),maximum=F)$minimum
+	m <- optimise(like,interval=c(0,1e4),maximum=F)$minimum
 	if (m == 0 || m == 1e6)
 		return(list('richness' = NA, 'mu' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(m) + 2 + 4 / (S2 - 2)

@@ -1,5 +1,5 @@
 pln<-function(n)	{
-	if (length(n) < 3 || max(n) < 3 || is.infinite(max(n[n <= 2^14])))
+	if (length(table(n)) < 3 || max(n) < 3 || is.infinite(max(n[n <= 2^14])))
 		return(list('richness' = NA, 'mu' = NA, 'sigma' = NA, 'AICc' = NA, 'fitted.SAD' = NA))
 	S <- length(n)
 	pl <- poilog::poilogMLE(n)
@@ -21,7 +21,7 @@ pln<-function(n)	{
 	s[as.numeric(names(t))] <- t
 	n2 <- n[n <= 2^14]
 	S2 <- length(n2)
-	u <- unique(n2)
+	u <- which(s > 0)
 	ll <- -sum(s[u] * log(p[u]))
 	aicc <- 2 * ll + 4 + 12 / (S2 - 3)
 	return(list('richness' = S / pl$p, 'mu' = as.numeric(pl$par[1]), 'sigma' = as.numeric(pl$par[2]), 'AICc'= aicc, 'fitted.RAD' = sadrad(S,p), 'fitted.SAD' = p[1:2^12]))
