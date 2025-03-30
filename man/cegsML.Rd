@@ -38,7 +38,7 @@ where e = \emph{E}, g = \eqn{\gamma}, l = \eqn{\lambda}, and x = the integer ser
 The model is fit by optimising the AICc using the \emph{stats4} function \emph{mle}, as with some other two-parameter model fitting functions in this package (e.g., \link{weibull}).
 The likelihood calculation that yields the AICc is explained in the package details.
 
-\link{cegsB} produces species richness estimates with lower variance. \emph{cegsML} is faster.
+\link{cegsB} and \link{cegsLD} produce species richness estimates with lower variance. \link{cegsB} assumes a prior distribution and \link{cegsLD} does not. \emph{cegsML} is faster than either one.
 
 The function \link{rcegs} computes random integers based on the distribution.
 }

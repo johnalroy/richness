@@ -30,7 +30,7 @@ A grid computation is used to obtain the likelihoods of the count distributions 
 
 An AICc is also reported for comparability with other functions. \link{cegsML} will produce lower AICcs if a likelihood approach is preferred. The likelihood calculation that yields the AICc is explained in the package details.
 
-\emph{cegsB} produces species richness estimates with low variance. \link{cegsML} is faster.
+Like \link{cegsLD}, \emph{cegsB} produces species richness estimates with low variance because it takes all likelihoods into account. However, \link{cegsLD} does not assume a prior distribution. \link{cegsML} is faster than either one.
 
 The function \link{rcegs} computes random integers based on the distribution.
 }
