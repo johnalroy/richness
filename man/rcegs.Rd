@@ -24,9 +24,9 @@ The governing parameter of the distribution.
 }
 }
 \details{
-This function draws random numbers based on the compound exponential-geomeric series (CEGS) distribution. Data can be fit to this distribution using the \link{cegsB} and \link{cegsML} functions, which respectively use Bayesian and maximum likelihood computations.
-The \eqn{\lambda} parameter must be positive, but \eqn{\gamma} may be negative.
-Sampling is better when the parameter \eqn{\lambda} is low, not high; variance in the counts is high when \eqn{\gamma} is high in either direction.
+This function draws random numbers based on the compound exponential-geomeric series (CEGS) distribution. Data can be fit to this distribution using the \link{cegsB}, \link{cegsLD}, and \link{cegsML} functions, which respectively use Bayesian, likelihood differencing, and maximum likelihood computations.
+The \eqn{\lambda} parameter should be positive.
+Sampling is better when the parameter \eqn{\lambda} is low, not high; variance in the counts is high when \eqn{\gamma} is high.
 The integers returned range from 0 to infinity, so zero counts will probably need to be removed prior to analysing the data.
 }
 \value{
