@@ -2,7 +2,7 @@ Package: richness
 Type: Package
 Title: Species Richness Estimation Tools
 Version: 3.1
-Date: 2025-03-30
+Date: 2025-04-15
 Author: John Alroy
 Maintainer: John Alroy <john.alroy@mq.edu.au>
 Description: The richness package implements a series of species abundance
@@ -13,10 +13,10 @@ Description: The richness package implements a series of species abundance
     Zipf. Richness and diversity estimation methods include before-and-after
     transect analysis, Chao 1, Chao 2, the corrected first-order jackknife,
     Fisher's alpha, the geometric series index, inverted sampling curve
-    extrapolation, the outer product ratio index, rarefaction, Shannon's H,
-    shareholder quorum subsampling (= coverage-based rarefaction), and Simpson's
-    D. There are also random generation functions and stand-alone interpolators
-    of singleton and doubleton counts.
+    extrapolation, rarefaction, Shannon's H, shareholder quorum subsampling
+    (= coverage-based rarefaction), and Simpson's D. There are also random
+    generation functions and stand-alone interpolators of singleton and
+    doubleton counts.
 License: GPL-2 | GPL-3
 RoxygenNote: 7.1.0
 Imports:
