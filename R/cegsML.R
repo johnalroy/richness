@@ -10,12 +10,12 @@ cegsML<-function(n)	{
 	s[as.numeric(names(t))] <- t
 	u <- which(s > 0)
 	px<-function(U,l,g,i)	{
-		p <- 1 / ((-log(U))^g / l + 1)
+		p <- 1 / ((-log(U)) / l + 1)^g
 		p[p == 0] <- 1e-4
 		dgeom(i,p)
 	}
 	p0<-function(U,l,g)	{
-		1 / ((-log(U))^g / l + 1)
+		1 / ((-log(U)) / l + 1)^g
 	}
 	like<-function(l,g)	{
 		if (l <= 0 || is.na(g))
@@ -32,15 +32,10 @@ cegsML<-function(n)	{
 			return(1e10)
 		ll
 	}
-	cf <- try(coef(stats4::mle(like,lower=list(l=0,g=-1),upper=list(l=1e8,g=10),start=list(l=1,g=2))),silent=T)
-	cf2 <- try(coef(stats4::mle(like,lower=list(l=0,g=-10),upper=list(l=1e8,g=1),start=list(l=1,g=-2))),silent=T)
-	if (length(cf) == 1 && length(cf2) == 1)
-		return(list('richness' = NA, 'scale' = NA, 'shape' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
-	if (length(cf) == 1 || like(cf2[1],cf2[2]) < like(cf[1],cf[2]))
-		cf <- cf2
+	cf <- try(coef(stats4::mle(like,lower=list(l=0,g=0),upper=list(l=1e8,g=10),start=list(l=1,g=2))),silent=T)
 	l <- cf[1]
 	g <- cf[2]
-	if (l == 0 || l == 1e8 || g == -10 || g == 10)
+	if (l == 0 || l == 1e8 || g == 0 || g == 10)
 		return(list('richness' = NA, 'scale' = NA, 'shape' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(l,g) + 4 + 12 / (S2 - 3)
 	p <- array()
