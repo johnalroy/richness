@@ -10,12 +10,12 @@ cegsB<-function(n)	{
 	s[as.numeric(names(t))] <- t
 	u <- which(s > 0)
 	px<-function(U,l,g,i)	{
-		p <- 1 / ((-log(U))^g / l + 1)
+		p <- 1 / (-log(U) / l + 1)^g
 		p[p == 0] <- 1e-4
 		dgeom(i,p)
 	}
 	p0<-function(U,l,g)	{
-		1 / ((-log(U))^g / l + 1)
+		1 / (-log(U) / l + 1)^g
 	}
 	like<-function(l,g)	{
 		p <- array()
@@ -32,9 +32,8 @@ cegsB<-function(n)	{
 	}
 	q_l <- 1:50 / 51
 	pr_l <- matrix(q_l,50,50) / (1 - matrix(q_l,50,50))
-	q_g <- 1:25 / 26
-	pr_g <- matrix(q_g,50,25,byrow=T) / (1 - matrix(q_g,50,25,byrow=T))
-	pr_g <- cbind(-pr_g[,25:1],pr_g)
+	q_g <- 1:50 / 51
+	pr_g <- matrix(q_g,50,50,byrow=T) / (1 - matrix(q_g,50,50,byrow=T))
 	ll <- matrix(NA,50,50)
 	for (i in 1:50)
 		for (j in 1:50)
@@ -42,19 +41,11 @@ cegsB<-function(n)	{
 	pp <- exp(-(ll - min(ll,na.rm=T)))
 	pp <- pp / sum(pp,na.rm=T)
 	m_l <- matrix(q_l,50,50)
-	m_g <- matrix(q_g,50,25,byrow=T)
-	m_g <- cbind(m_g[,25:1],m_g)
-	if (sum(pp[,1:25]) > sum(pp[,26:50]))	{
-		l <- sum(pp[,1:25] / sum(pp[,1:25]) * m_l[,1:25])
-		l <- l / (1 - l)
-		g <- sum(pp[,1:25] / sum(pp[,1:25]) * m_g[,1:25])
-		g <- -g / (1 - g)
-	} else	{
-		l <- sum(pp[,26:50] / sum(pp[,26:50]) * m_l[,26:50])
-		l <- l / (1 - l)
-		g <- sum(pp[,26:50] / sum(pp[,26:50]) * m_g[,26:50])
-		g <- g / (1 - g)
-	}
+	m_g <- matrix(q_g,50,50,byrow=T)
+	l <- sum(pp * m_l)
+	l <- l / (1 - l)
+	g <- sum(pp * m_g)
+	g <- g / (1 - g)
 	aicc <- 2 * like(l,g) + 4 + 12 / (S2 - 3)
 	p <- array()
 	for (i in 1:2^14)
