@@ -10,12 +10,12 @@ cegsLD<-function(n)	{
 	s[as.numeric(names(t))] <- t
 	u <- which(s > 0)
 	px<-function(U,l,g,i)	{
-		p <- 1 / ((-log(U))^g / l + 1)
+		p <- 1 / ((-log(U)) / l + 1)^g
 		p[p == 0] <- 1e-4
 		dgeom(i,p)
 	}
 	p0<-function(U,l,g)	{
-		1 / ((-log(U))^g / l + 1)
+		1 / ((-log(U)) / l + 1)^g
 	}
 	like<-function(l,g)	{
 		p <- array()
@@ -30,28 +30,19 @@ cegsLD<-function(n)	{
 			return(1e10)
 		ll
 	}
-	m_l <- matrix(NA,51,51)
-	m_g <- matrix(NA,51,51)
+	ml <- matrix(52 / 1:51 - 1,51,51)
+	mg <- t(ml)
 	ll <- matrix(Inf,53,53)
-	for (i in 1:51)	{
-		m_l[i,] <- 1:51 / 10 - 2.6
-		m_g[,i] <- 1:51 / 10 - 2.6
-	}
-	m_l[m_l > 0] <- exp(m_l[m_l > 0]^2)
-	m_l[m_l <= 0] <- exp(-m_l[m_l <= 0]^2)
-	m_g[m_g > 0] <- m_g[m_g > 0]^2
-	m_g[m_g <= 0] <- -m_g[m_g <= 0]^2
 	for (i in 1:51)
 		for (j in 1:51)
-			ll[i + 1,j + 1] <- like(m_l[i,j],m_g[i,j])
+			ll[i + 1,j + 1] <- like(ml[i,j],mg[i,j])
 	ell <- exp(-ll + min(ll) + 5)
 	dr <- abs(ell[2:52,2:52] - ell[2:52,1:51]) + abs(ell[2:52,2:52] - ell[2:52,3:53])
 	dc <- abs(ell[2:52,2:52] - ell[1:51,2:52]) + abs(ell[2:52,2:52] - ell[3:53,2:52])
 	d <- dr * dc
 	d <- d / sum(d)
-	m_l <- log(m_l)
-	l <- exp(sum(d * m_l))
-	g <- sum(d * m_g)
+	l <- sum(d * ml)
+	g <- sum(d * mg)
 	aicc <- 2 * like(l,g) + 4 + 12 / (S2 - 3)
 	p <- array()
 	for (i in 1:2^14)
