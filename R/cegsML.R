@@ -25,7 +25,7 @@ cegsML<-function(n)	{
 			p[i] <- integrate(px,l=l,g=g,i=u[i],lower=1e-20,upper=1 - 1e-20,stop.on.error=F)$value
 		p0 <- integrate(p0,l=l,g=g,lower=1e-20,upper=1 - 1e-20,stop.on.error=F)$value
 		p <- p / (1 - p0)
-		if (is.nan(p[1]) || p[length(p)] < 1e-100 || min(p) == 0)
+		if (is.nan(p[1]) || min(p) == 0)
 			return(1e10)
 		ll <- -sum(s[u] * log(p))
 		if (is.infinite(ll) || is.nan(ll))
