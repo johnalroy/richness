@@ -11,13 +11,14 @@ cegsML<-function(n)	{
 	u <- which(s > 0)
 	px<-function(U,l,g,i)	{
 		p <- 1 / (-log(U) / l + 1)^g
-		p[p == 0] <- 1e-4
+		p[p == 0] <- 1e-8
 		dgeom(i,p)
 	}
 	p0<-function(U,l,g)	{
 		1 / (-log(U) / l + 1)^g
 	}
 	like<-function(l,g)	{
+		g <- exp(g)
 		if (l <= 0 || g <= 0)
 			return(1e10)
 		p <- array()
@@ -32,12 +33,13 @@ cegsML<-function(n)	{
 			return(1e10)
 		ll
 	}
-	cf <- try(coef(stats4::mle(like,lower=list(l=0,g=0),upper=list(l=1e8,g=1000),start=list(l=1,g=2))),silent=T)
+	cf <- try(coef(stats4::mle(like,lower=list(l=0,g=-5),upper=list(l=1e8,g=5),start=list(l=1,g=2))),silent=T)
 	l <- cf[1]
 	g <- cf[2]
-	if (l == 0 || l == 1e8 || g == 0 || g == 1000)
+	if (l == 0 || l == 1e8 || g == -5 || g == 5)
 		return(list('richness' = NA, 'scale' = NA, 'shape' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(l,g) + 4 + 12 / (S2 - 3)
+	g <- exp(g)
 	p <- array()
 	for (i in 1:2^14)
 		p[i] <- integrate(px,l=l,g=g,i=i,lower=1e-20,upper=1 - 1e-20,stop.on.error=F)$value
