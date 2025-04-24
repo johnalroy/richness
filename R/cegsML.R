@@ -19,7 +19,7 @@ cegsML<-function(n)	{
 	}
 	like<-function(l,g)	{
 		g <- exp(g)
-		if (l <= 0 || g <= 0)
+		if (l <= 0 || g <= -10)
 			return(1e10)
 		p <- array()
 		for (i in 1:length(u))
@@ -33,10 +33,10 @@ cegsML<-function(n)	{
 			return(1e10)
 		ll
 	}
-	cf <- try(coef(stats4::mle(like,lower=list(l=0,g=-5),upper=list(l=1e8,g=5),start=list(l=1,g=2))),silent=T)
+	cf <- try(coef(stats4::mle(like,lower=list(l=0,g=-10),upper=list(l=1e8,g=10),start=list(l=1,g=2))),silent=T)
 	l <- cf[1]
 	g <- cf[2]
-	if (l == 0 || l == 1e8 || g == -5 || g == 5)
+	if (l == 0 || l == 1e8 || g == -10 || g == 10)
 		return(list('richness' = NA, 'scale' = NA, 'shape' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	aicc <- 2 * like(l,g) + 4 + 12 / (S2 - 3)
 	g <- exp(g)
