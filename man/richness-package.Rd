@@ -12,20 +12,20 @@
 
 This package implements various species abundance distribution, richness, and diversity estimators that work on arrays of species counts.
 
-The package fits count vectors to the broken stick (\link{bsd}), compound exponential-geometric series or CEGS (\link{cegsB} and \link{cegsML}), discrete Weibull (\link{weibull}), exponential-to-\emph{e} (\link{exp2e}), geometric series (\link{gsd}), half-power exponential (\link{halfpower}), inverse power (\link{ipower}), log series (\link{logd}), negative binomial (\link{nbin}), odds-2 (\link{odds2}), Poisson log normal (\link{pln}), scaled odds (\link{sodds}), zero-sum multinomial (\link{zsm}), and Zipf (\link{zipf}) distributions.
+The package fits count vectors to the broken stick (\link{bsd}), compound exponential-geometric series or CEGS (\link{cegsB}, \link{cegsLD}, and \link{cegsML}), discrete Weibull (\link{weibull}), exponential-to-\emph{e} (\link{exp2e}), geometric series (\link{gsd}), half-power exponential (\link{halfpower}), inverse power (\link{ipower}), log series (\link{logd}), negative binomial (\link{nbin}), odds-2 (\link{odds2}), Poisson log normal (\link{pln}), scaled odds (\link{sodds}), zero-sum multinomial (\link{zsm}), and Zipf (\link{zipf}) distributions.
 The CEGS, exponential-to-\emph{e}, half-power exponential, inverse power, odds-2, and scaled odds distributions have been overlooked previously.
 
 There are random number generators respectively based on these six distributions and the discrete Weibull (\link{rcegs}, \link{rexp2e}, \link{rhp}, \link{ripower}, \link{rodds2}, \link{rodds}, and \link{rweib}).
 
 The distribution-fitting function \link{saturate} fits a saturated model that assumes a geometric sampling process.
 
-The functions \emph{bsd}, \emph{cegsB}, \emph{cegsML}, \emph{exp2e}, \emph{gsd}, \emph{halfpower}, \emph{ipower}, \emph{nbin}, \emph{odds2}, \emph{sodds}, and \emph{weibull} depend only on the utility function \link{sadrad}.
+The functions \emph{bsd}, \emph{cegsB}, \emph{cegsLD}, \emph{cegsML}, \emph{exp2e}, \emph{gsd}, \emph{halfpower}, \emph{ipower}, \emph{nbin}, \emph{odds2}, \emph{sodds}, and \emph{weibull} depend only on the utility function \link{sadrad}.
 \emph{sadrad} finds a series of counts that are evenly spaced across a species abundance distribution.
 The other distribution functions also depend on the packages \emph{poilog} and \emph{sads}.
 
 If a matrix of count data covering a spatial or temporal gradient is available, \link{bat} can be used to carry out before-and-after transect analysis. \emph{bat} can use any one of the many distribution-based richness estimators mentioned previously.
 
-The species richness extrapolation indices are Chao 1 (\link{chao1}), Chao 2 (\link{chao2}), the geometric series index or GSI (\link{gsindex}: Kerr and Alroy 2023), the corrected first-order jackknife (\link{cJ1}: Alroy 2020), and the first- and second-order jackknifes (\link{jackknife1} and \link{jackknife2}).
+The species richness extrapolation indices are Chao 1 (\link{chao1}), Chao 2 (\link{chao2}), the geometric series index or GSI (\link{gsindex}: Kerr and Alroy 2023), the corrected first-order jackknife (\link{cJ1}: Alroy 2020), the first- and second-order jackknifes (\link{jackknife1} and \link{jackknife2}), and the outer product ratio (\link{opr}).
 
 The blended diversity estimators are Fisher's alpha (\link{fisher}), Shannon's H (\link{shannon}), and the inverse of Simpson's D (\link{simpson}).
 \emph{zsm} returns a parameter called theta that is strongly correlated with alpha.
@@ -38,7 +38,7 @@ The utility functions \link{doubletons} and \link{singletons} can be used to rec
 
 Most of the distributions are fit by optimising the corrected Akaike information criterion (AICc: Hurvich and Tsai 1993).
 The AICc is based on the negative log likelihood of the data.
-However, \emph{cegsB} uses a Bayesian calculation.
+However, \emph{cegsB} uses a Bayesian calculation and \emph{cegsLD} uses likelihood differencing.
 
 The likelihood is just the product of the probabilities of obtaining the indivual species tallies given the hypothesised species abundance distribution.
 Because combinatoric terms are constant across all potential model parameters, this simple calculation yields the same solution as computing multinomial probabilities of the observed count distribution given different parameters.
@@ -58,7 +58,7 @@ Unlike fitting a function directly to the rank-abundance distribution (RAD), thi
 So its advantage is being informed strongly by the counts but not beholden to their rank ordering.
 The method is therefore not compromised by the fact that the ranks and counts in an RAD are non-independent, which violates the assumptions of fitting methods such as minimising the deviance or sum of squares.
 
-Fitting SADs by likelihood is not robust when the number of singletons is relatively large and the number of occupied classes is small. Therefore, all functions in this package using the AICc fitting approach return no result if the maximum count is one or two (or if there are only one or two species).
+Fitting SADs by likelihood is not robust when the number of singletons is relatively large and the number of occupied classes is small. Therefore, all functions in this package using the AICc fitting approach return no result if the maximum count is one or two (or if there are only one or two classes of counts).
 
 }
 \author{
@@ -73,7 +73,7 @@ Alroy, J. 2020. On four measures of taxonomic richness. \emph{Paleobiology} 46:1
 
 Hurvich, C. M. and C. L. Tsai. 1993. A corrected Akaike information criterion for vector autoregressive model selection. \emph{Journal of Time Series Analysis} 14:271-279. 
 
-Kerr, M. R. and J. Alroy. 2020. Body size and abundance are decoupled from species richness in Australian marine bivalves. \emph{Frontiers of Biogeography} 15(4). http://dx.doi.org/10.21425/F5FBG58651
+Kerr, M. R. and J. Alroy. 2023. Body size and abundance are decoupled from species richness in Australian marine bivalves. \emph{Frontiers of Biogeography} 15(4). http://dx.doi.org/10.21425/F5FBG58651
 }
 \keyword{ package }
 \seealso{
@@ -92,8 +92,8 @@ n <- n[n > 0]
 
 # alternatively, create a vector based on the CEGS distribution
 
-n <- rcegs(1000)
-n <- n[n > 0]
+#n <- rcegs(1000)
+#n <- n[n > 0]
 
 # plot a rank-abundance distribution
 # CEGS and the Poisson log normal can look very similar
@@ -116,7 +116,7 @@ chao1(n)
 # carry out a simulation analysis with 30 samples
 
 # the true number of species R in each sample is log normally distributed
-# therefore, the new models are model for the data (in principle)
+# therefore, the new models may not be accurate (in principle)
 
 R <- ceiling(exp(rnorm(30,mean=log(30))))
 
