@@ -16,6 +16,8 @@ A vector of integer counts representing the number of individuals per species.
 }
 \details{
 This function implements the geometric series index of Kerr and Alroy (2023), only returning the richness estimate.
+
+The index assumes a compound uniform-geometric distribution. Specifically, it implies that each count is yielded by a geometric process with its own randomly generated governing parameter \emph{p} being drawn from the uniform distribution.
 }
 \references{
 Kerr, M. R. and J. Alroy. 2023. Body size and abundance are decoupled from species richness in Australian marine bivalves. \emph{Frontiers of Biogeography} 15(4). http://dx.doi.org/10.21425/F5FBG58651
