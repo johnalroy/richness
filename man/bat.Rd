@@ -36,10 +36,9 @@ The points must be numbers, but they can be negative. They do not need to be sup
 The computation hinges on comparing different richness estimates, and it only makes sense for them to be computed in the same way.
 Therefore, only a single richness estimation function can be supplied.
 The richness estimation function must return a "richness" value.
-The appropriate functions in this package are \link{bsd}, \link{cegsB}, \link{cegsML}, \link{exp2e}, \link{gsd}, \link{halfpower}, \link{nbin}, \link{odds2}, \link{pln}, \link{sodds}, and \link{weibull}.
-\emph{cegsML} is the default because it fits uneven data sets well, but other functions such as \emph{sodds} should be investigated.
-The best distribution will yield the lowest AICc values.
-Functions not returning richness estimates (such as \link{logd}), returning relative estimates (\link{rarefy} or \link{sqs}), or based on simple indices (such as \link{chao1}) are not designed to work with \emph{bat}.
+The appropriate functions in this package are \link{bsd}, \link{cegsB}, \link{cegsLD}, \link{cegsML}, \link{exp2e}, \link{gsd}, \link{halfpower}, \link{nbin}, \link{odds2}, \link{pln}, \link{sodds}, and \link{weibull}.
+\emph{cegsML} is the default because it is fast and fits uneven data sets well, but other functions such as \emph{cegsLD} should be investigated.
+Functions not returning richness estimates (such as \link{logd}), returning relative estimates (\link{rarefy} or \link{sqs}), or based on simple indices (such as \link{chao1}, \link{gsindex}, or \link{opr}) are not designed to work with \emph{bat}.
 }
 \value{
   \item{total.richness}{The estimated species richness at each point along the transect, including species that only exist at the point.}
