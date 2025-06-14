@@ -52,8 +52,6 @@ The likelihood expression used in the relevant functions is:
 
 where s = the observed SAD (meaning counts of species in each class); p = the hypothesised probabilities of the model; and u = a list of unique counts, i.e., SAD cells that have non-zero counts.
 
-Note that only species with 2^14 = 16384 or fewer individuals are considered in each function to make computations tractable.
-
 Unlike fitting a function directly to the rank-abundance distribution (RAD), this calculation requires specifying nothing other than the count class probabilities.
 So its advantage is being informed strongly by the counts but not beholden to their rank ordering.
 The method is therefore not compromised by the fact that the ranks and counts in an RAD are non-independent, which violates the assumptions of fitting methods such as minimising the deviance or sum of squares.
