@@ -1,12 +1,11 @@
 weibull<-function(n)	{
-	if (length(table(n)) < 3 || max(n) < 3)
+	if (length(table(n)) < 3)
 		return(list('richness' = NA, 'scale' = NA, 'shape' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
 	library(stats4)
 	S <- length(n)
-	n2 <- n[n <= 2^14]
-	S2 <- length(n2)
-	s <- array(dim=2^14,data=0)
-	t <- table(n2)
+	mx <- max(2^12,2^ceiling(log2(max(n))))
+	s <- array(dim=mx,data=0)
+	t <- table(n)
 	s[as.numeric(names(t))] <- t
 	u <- which(s > 0)
 	like<-function(a,b)	{
@@ -25,8 +24,8 @@ weibull<-function(n)	{
 	b <- cf[2]
 	if (a == 0 || a ==1)
 		return(list('richness' = NA, 'scale' = NA, 'shape' = NA, 'AICc' = NA, 'fitted.RAD' = NA, 'fitted.SAD' = NA))
-	aicc <- 2 * like(a,b) + 4 + 12 / (S2 - 3)
-	x <- 1:(2^20 + 1)
+	aicc <- 2 * like(a,b) + 4 + 12 / (S - 3)
+	x <- 1:(mx + 1)
 	p <- -diff(a^x^b) / a
 	return(list('richness' = as.numeric(S / a), 'scale' = as.numeric(a), 'shape' = as.numeric(b), 'AICc' = aicc, 'fitted.RAD' = sadrad(length(n),p), 'fitted.SAD' = p[1:2^12]))
 }
